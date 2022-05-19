@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jakość Powietrza Polska</title>
+</head>
+<body>
+    
+
+{% block content %}
+<div id="header" class="text-primary">
+    <h1>Sprawdź stan powietrza, zanim wyjdziesz na zewnątrz!</h1>
+</div>
+<h3>Wyszukaj stacje po numerze indexu!</h3><br/>
+
+{% if indeks  %}
+    {{ indeks }}
+{% endif %}
+{% if api %}
+    {% if api == "Błąd Wczytywania!" %}
+        Wystąpił błąd z wczytywaniem stacji. Spróbuj ponownie.
+    {% else %}
+        Numer Indeksu: {{ api.id }} </br>
+        Jakość Powietrza: {{ api.stIndexLevel.indexLevelName }} </br>
+        Data Ostatniego Pomiaru: {{ api.stSourceDataDate }} </br>
+    {% endif %}
+
+{% endif %}
+<p></p>
+<h3>Stacje</h3>
+{% for index in api2 %}
+    Index Stacji: {{ index.id}} </br>
+    Miejscowość: {{ index.stationName }} </br>
+    <p></p>
+{% endfor %}
+
+{% endblock %}
+</body>
